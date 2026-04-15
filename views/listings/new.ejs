@@ -1,0 +1,73 @@
+<% layout("/layouts/boilerplate")%>
+
+<div class="row">
+<div class="col-8 offset-2">
+     <br> <br>
+<h3>Create a new listing</h3>
+<form class="needs-validation" action="/listings" method="post" novalidate>
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text"
+        name="listing[title]"
+        class="form-control"
+        required 
+        placeholder="Add a catchy title">
+        <div class="valid-feedback">Title looks good!</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="listing[description]" 
+        class="form-control"
+        required
+        ></textarea>
+        <div class="invalid-feedback">Please enter a short description</div>
+    </div>
+    
+    <div class="mb-3">
+        <label for="image" class="form-label">Image</label>
+        <input type="text"
+        name="listing[image]"
+        class="form-control"
+        placeholder="Enter image URL/Links">
+    </div>
+    
+    <div class="row ">
+        <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input
+            name="listing[price]"
+            class="form-control"
+            placeholder="1200">
+            <div class="invalid-feedback">Please enter a valid price</div>
+        </div>
+
+    
+        <div class="mb-3 col-md-8">
+            <label for="country" class="form-label">Country</label>
+            <input type="text"
+            name="listing[country]"
+            class="form-control"
+            required
+            placeholder="India">
+            <div class="invalid-feedback">Country name should be valid</div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="location" class="form-label">Location</label>
+        <input type="text"
+        name="listing[location]"
+        required
+        class="form-control"
+        placeholder="Rajasthan, Jaipur, Goa...">
+        <div class="invalid-feedback">Location should be valid</div>
+
+    </div>
+
+    <button class="btn btn-dark add-btn">Add</button>
+    <br> <br> <br>
+</form>
+
+</div>
+</div>
