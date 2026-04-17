@@ -5,11 +5,17 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate"); //for styling multiple ejs template
 const ExpressError = require("./utils/ExpressError.js");
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
+
 const session = require("express-session");
 const flash = require("connect-flash");
-
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
+const { emitWarning } = require("process");
 
 const Mongo_URL = "mongodb://127.0.0.1:27017/wanderlust";
 main()
@@ -35,10 +41,10 @@ const sessionOption = {
   secret: "mysupersecretstring",
   resave: false,
   saveUninitialized: true,
-  cookie:{
-  expires: Date.now() + 7 * 24 * 60 * 60 * 10000,  //cookies in session
-  maxAge : 7 * 24 * 60 * 60 * 10000,
-  httpOnly : true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 10000, //cookies in session
+    maxAge: 7 * 24 * 60 * 60 * 10000,
+    httpOnly: true,
   },
 };
 app.get("/", (req, res) => {
@@ -48,17 +54,33 @@ app.get("/", (req, res) => {
 app.use(session(sessionOption));
 app.use(flash()); //use it before routes
 
-app.use((req,res,next) =>{
+app.use(passport.initialize()); // a middleware that initialize passport
+app.use(passport.session()); //a web application need the ability to identify users as they browse from page to page
+passport.use(new LocalStrategy(User.authenticate())); //static method to authenticate model---Generate a function that use in passports's localStrategy
+
+passport.serializeUser(User.serializeUser()); //searialize users into the session
+passport.deserializeUser(User.deserializeUser()); //desearialize session--if, user ended his session
+
+app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   // console.log(res.locals.success);
-  next(); // important to call next 
+  next(); // important to call next
 });
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews); 
+// app.get("/demouser", async (req, res) => {
+//   let fakeUser = new User({
+//     email: "student@gmail.com",
+//     username: "delta-student",
+//   });
 
+//   let registeredUser = await User.register(fakeUser, "Helloworld");
+//   res.send(registeredUser);
+// });
 
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 // 404 handler
 app.use((req, res, next) => {
