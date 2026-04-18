@@ -40,10 +40,10 @@ app.use(express.static(path.join(__dirname, "/public")));
 const sessionOption = {
   secret: "mysupersecretstring",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
-    expires: Date.now() + 7 * 24 * 60 * 60 * 10000, //cookies in session
-    maxAge: 7 * 24 * 60 * 60 * 10000,
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000, //cookies in session
+    maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   },
 };
@@ -64,19 +64,9 @@ passport.deserializeUser(User.deserializeUser()); //desearialize session--if, us
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  // console.log(res.locals.success);
-  next(); // important to call next
+  res.locals.currUser = req.user;
+  next();
 });
-
-// app.get("/demouser", async (req, res) => {
-//   let fakeUser = new User({
-//     email: "student@gmail.com",
-//     username: "delta-student",
-//   });
-
-//   let registeredUser = await User.register(fakeUser, "Helloworld");
-//   res.send(registeredUser);
-// });
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
