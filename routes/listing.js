@@ -16,11 +16,7 @@ const upload = multer({ storage }); //destination to save photo like a folder
 router
   .route("/")
   .get(wrapAsync(listingController.index))
-  // .post(
-  //   isloggedIn,
-  //   validateListing,
-  //   wrapAsync(listingController.createNewListing),
-  // );
+
   .post(upload.single("listing[image]"), (req, res) => {
     res.send(req.file);
   });
