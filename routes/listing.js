@@ -8,22 +8,30 @@ const flash = require("connect-flash");
 const { isloggedIn, isOwner, validateListing } = require("../middleware.js");
 const listingController = require("../controllers/listings.js");
 
-//Index Route
-router.get("/", wrapAsync(listingController.index));
+//Index Route //CREATE ROUTE
+router
+  .route("/")
+  .get(wrapAsync(listingController.index))
+  .post(
+    isloggedIn,
+    validateListing,
+    wrapAsync(listingController.createNewListing),
+  );
 
 //NEW ROUTE
 router.get("/new", isloggedIn, listingController.renderNewForm);
 
-//Read : Show Route
-router.get("/:id", wrapAsync(listingController.showListing));
-
-//CREATE ROUTE
-router.post(
-  "/",
-  isloggedIn,
-  validateListing,
-  wrapAsync(listingController.createNewListing),
-);
+//Read : Show Route //UPDATE ROUTE //DELETE ROUTE
+router
+  .route("/:id")
+  .get(wrapAsync(listingController.showListing))
+  .put(
+    isloggedIn,
+    isOwner,
+    validateListing,
+    wrapAsync(listingController.updateListing),
+  )
+  .delete(isloggedIn, isOwner, wrapAsync(listingController.destoryListing));
 
 //EDIT ROUTE
 router.get(
@@ -31,23 +39,6 @@ router.get(
   isloggedIn,
   isOwner,
   wrapAsync(listingController.editListing),
-);
-
-//UPDATE ROUTE
-router.put(
-  "/:id",
-  isloggedIn,
-  isOwner,
-  validateListing,
-  wrapAsync(listingController.updateListing),
-);
-
-//DELETE ROUTE
-router.delete(
-  "/:id",
-  isloggedIn,
-  isOwner,
-  wrapAsync(listingController.destoryListing),
 );
 
 module.exports = router;

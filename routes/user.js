@@ -6,22 +6,20 @@ const wrapAsyc = require("../utils/wrapAsyc");
 const { saveRedirectUrl } = require("../middleware.js");
 const userController = require("../controllers/user.js");
 
-router.get("/signup", userController.renderSignUpform);
+router.route("/signup").get(userController.renderSignUpform);
+wrapAsyc(userController.signUp);
 
-router.post("/signup", wrapAsyc(userController.signUp));
-
-router.get("/login", userController.renderLoginForm);
-
-//passport provide an authentcate() function, which is used as route middlewares to authenticate request
-router.post(
-  "/login",
-  saveRedirectUrl,
-  passport.authenticate("local", {
-    failureRedirect: "/login",
-    failureFlash: true,
-  }),
-  userController.afterLoginMsg,
-);
+router
+  .route("/login")
+  .get(userController.renderLoginForm)
+  .post(//passport provide an authentcate() function, which is used as route middlewares to authenticate request
+    saveRedirectUrl,
+    passport.authenticate("local", {
+      failureRedirect: "/login",
+      failureFlash: true,
+    }),
+    userController.afterLoginMsg,
+  );
 
 router.get("/logout", userController.logout);
 
