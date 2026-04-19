@@ -9,7 +9,8 @@ const { isloggedIn, isOwner, validateListing } = require("../middleware.js");
 const listingController = require("../controllers/listings.js");
 
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" }); //destination to save photo like a folder
+const { storage } = require("../cloudConfig.js");
+const upload = multer({ storage }); //destination to save photo like a folder
 
 //Index Route //CREATE ROUTE
 router
@@ -20,7 +21,7 @@ router
   //   validateListing,
   //   wrapAsync(listingController.createNewListing),
   // );
-  .post(upload.single('listing[image]'),(req, res) => {
+  .post(upload.single("listing[image]"), (req, res) => {
     res.send(req.file);
   });
 
