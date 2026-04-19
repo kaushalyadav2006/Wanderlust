@@ -13,13 +13,13 @@ const { storage } = require("../cloudConfig.js");
 const upload = multer({ storage }); //destination to save photo like a folder
 
 //Index Route //CREATE ROUTE
-router
-  .route("/")
-  .get(wrapAsync(listingController.index))
+router.route("/").get(wrapAsync(listingController.index)).post(
+  isloggedIn,
 
-  .post(upload.single("listing[image]"), (req, res) => {
-    res.send(req.file);
-  });
+  upload.single("listing[image]"),
+  validateListing,
+  wrapAsync(listingController.createNewListing),
+);
 
 //NEW ROUTE
 router.get("/new", isloggedIn, listingController.renderNewForm);
