@@ -4,7 +4,7 @@
 <div class="col-8 offset-2">
 <h3>Edit your listing</h3>
 <br>
-<form method="post" action="/listings/<%= listing._id%>?_method=PUT"novalidate class="needs-validation" >
+<form method="post" action="/listings/<%= listing._id%>?_method=PUT"novalidate class="needs-validation" enctype="multipart/form-data" >
     <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input type="text"
@@ -22,12 +22,10 @@
     </div>
 
     <div class="mb-3">
-        <label for="image" class="form-label">Image link</label>
-        <input type="text"
+        <label for="image" class="form-label">Upload New Image</label>
+        <input type="file"
         name="listing[image]"
-        class="form-control"
-        required
-        value="<%=listing.image%>">
+        class="form-control" >
         <div class="invalid-feedback">Image URL/links should be valid</div>
     </div>
   
