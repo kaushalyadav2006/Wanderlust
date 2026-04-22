@@ -111,7 +111,7 @@
     <div class="row">
        <p><b>All Reviews</b></p>
       <% for (let review of listing.reviews) { %>
-        <div class="card col-5 ms-3 mb-3">
+        <div class="card col-5  ms-3 mb-3">
           <div class="card-body">
             <h5 class="card-title">@<%= review.author.username %></h5>
 
@@ -128,7 +128,7 @@
             method="POST" 
             action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
           >
-            <button class="btn btn-sm btn-dark">Delete</button>
+            <button class="btn btn-sm btn-dark mt-3">Delete</button>
           </form>
         </div>
       <% } %>
@@ -138,6 +138,7 @@
 
    <div class="col-6 offset-3 mb-3">
       <h3>Where You'll be</h3>
+      <hr>
       <div id="map"></div>
     </div>
 </div>

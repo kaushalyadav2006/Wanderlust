@@ -87,6 +87,13 @@ body {
   border: none !important;
 }
 
+.edit-preview-img {
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
 /* show page  */
 .show-img {
   height: 30vh;

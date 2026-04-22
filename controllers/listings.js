@@ -33,7 +33,7 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "Listing you requested does not exist or was removed.");
     return res.redirect("/listings");
   }
-  console.log(listing);
+  // console.log(listing); // for showing the listing data
   res.render("listings/show.ejs", { listing, reviews: listing.reviews });
 };
 
@@ -94,6 +94,6 @@ module.exports.destoryListing = async (req, res) => {
   let { id } = req.params;
   let deleteLsiting = await Listing.findByIdAndDelete(id);
   console.log(deleteLsiting);
-  req.flash("success", "Listings deleted!");
+  req.flash("success", "Listing deleted!");
   res.redirect("/listings");
 };

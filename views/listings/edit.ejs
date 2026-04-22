@@ -25,7 +25,11 @@
         Original Listing Image 
         <br>
         <br> 
-        <img src="<%= originalImageUrl%>">
+                <img
+                    src="<%= originalImageUrl%>"
+                    class="<%= originalImageUrl.includes('/upload') ? '' : 'edit-preview-img' %>"
+                    alt="Original Listing Image"
+                >
     </div>
 
     <div class="mb-3">
