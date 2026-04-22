@@ -1,7 +1,8 @@
 if (process.env.NODE_ENV != "production") {
-  require("dotenv").config();
+  // require("dotenv").config();
+   require("dotenv").config({ quiet: true });
 }
-console.log(process.env.SECRET);
+// console.log(process.env.SECRET);
 
 const express = require("express");
 const app = express();
@@ -52,9 +53,10 @@ const sessionOption = {
     httpOnly: true,
   },
 };
-app.get("/", (req, res) => {
-  res.send("hii , I'm root");
-});
+
+// app.get("/", (req, res) => {
+//   res.send("hii , I'm root");
+// });
 
 app.use(session(sessionOption));
 app.use(flash()); //use it before routes
