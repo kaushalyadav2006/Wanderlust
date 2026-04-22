@@ -1,5 +1,6 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review.js");
+const mongoose = require("mongoose");
 const { listingSchema, reviewSchema } = require("./schema.js");
 const ExpressError = require("./utils/ExpressError.js");
 
@@ -22,6 +23,12 @@ module.exports.saveRedirectUrl = (req, res, next) => {
 
 module.exports.isOwner = async (req, res, next) => {
   let { id } = req.params;
+
+  if (!mongoose.isValidObjectId(id)) {
+    req.flash("error", "Invalid listing link.");
+    return res.redirect("/listings");
+  }
+
   let listing = await Listing.findById(id);
   const currUser = res.locals.currUser;
 
