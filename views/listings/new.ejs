@@ -62,17 +62,45 @@
         </div>
     </div>
 
-    <div class="mb-3">
-        <label for="location" class="form-label">Location</label>
-        <input type="text"
-        name="listing[location]"
-        required
-        class="form-control"
-        placeholder="Rajasthan, Jaipur, Goa...">
-        <div class="invalid-feedback">Location should be valid</div>
+    <div class="row ">
+        <div class="mb-3 col-md-6">
+            <label for="location" class="form-label">Location</label>
+            <input type="text"
+            name="listing[location]"
+            required
+            class="form-control"
+            placeholder="Rajasthan, Jaipur, Goa...">
+            <div class="invalid-feedback">Location should be valid</div>
+        </div>
 
+        <div class="mb-3 col-md-6">
+            <label for="category" class="form-label">Category</label>
+
+            <select
+                name="listing[category]"
+                id="category"
+                class="form-select"
+            >
+                <option value="">Select Category</option>
+                <option value="Rooms">Rooms</option>
+                <option value="Iconic Cities">Iconic Cities</option>
+                <option value="Mountains">Mountains</option>
+                <option value="Castles">Castles</option>
+                <option value="Amazing Pools">Amazing Pools</option>
+                <option value="Camping">Camping</option>
+                <option value="Farms">Farms</option>
+                <option value="Arctic">Arctic</option>
+                <option value="Domes">Domes</option>
+                <option value="Boats">Boats</option>
+                <option value="Beach">Beach</option>
+            </select>
+
+            <div class="invalid-feedback">
+                Select a category for your Listing
+            </div>
+            
+        </div>
     </div>
-
     <button class="btn btn-dark add-btn">Add</button>
     <br> <br> <br>
 </form>

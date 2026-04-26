@@ -62,7 +62,8 @@
         </div>
     </div>
 
-    <div class="mb-3">
+<div class="row">
+    <div class="mb-3 col-md-6">
         <label for="location" class="form-label">Location</label>
         <input type="text"
         name="listing[location]"
@@ -71,6 +72,29 @@
         value="<%=listing.location%>">
         <div class="invalid-feedback">Location should be valid</div>
     </div>
+    <div class="mb-3 col-md-6">
+    <label for="category" class="form-label">Category</label>
+
+    <!-- <% const categories = ["Rooms", "Iconic Cities", "Mountains", "Castles", "Amazing Pools", "Camping", "Farms", "Arctic", "Domes", "Boats", "Beach"]; %> -->
+     
+    <select name="listing[category]" class="form-select" required>
+    <option value="">Select Category</option>
+
+    <% categories.forEach(category => { %>
+        <option
+        value="<%= category %>"
+        <%= listing?.category === category ? "selected" : "" %>
+        >
+        <%= category %>
+        </option>
+    <% }) %>
+    </select>
+
+        <div class="invalid-feedback">
+            Select a category for your Listing
+        </div>
+    </div>
+</div>
     <button class="btn btn-dark edit-btn mt-3">Edit</button>
 </form>
 </div>

@@ -70,7 +70,10 @@ module.exports.editListing = async (req, res) => {
   }
   let originalImageUrl = listing.image.url;
   originalImageUrl = originalImageUrl.replace("/upload", "/upload/h_300,w_250");
-  res.render("listings/edit.ejs", { listing, originalImageUrl });
+
+  // Fetch distinct categories from the database
+  const categories = await Listing.distinct("category");
+  res.render("listings/edit.ejs", { listing, originalImageUrl, categories });
 };
 
 module.exports.updateListing = async (req, res) => {
@@ -119,4 +122,28 @@ module.exports.index = async (req, res) => {
     return res.redirect("/listings");
   }
   res.render("listings/index.ejs", { allListings, q });
+};
+
+
+module.exports.index = async (req, res) => {
+  const q = (req.query.q || "").trim();
+  const { category } = req.query;
+  let filter = {};
+  if (q) {
+    const regex = new RegExp(q, "i");
+    filter.$or = [{ title: regex }, { location: regex }, { country: regex }];
+  }
+  if (category) {
+    filter.category = category;
+  }
+  const allListings = await Listing.find(filter);
+
+  if (q && allListings.length === 0) {
+    req.flash(
+      "error",
+      "No listings found for this location. Try a different search."
+    );
+    return res.redirect("/listings");
+  }
+  res.render("listings/index.ejs", { allListings, q, category });
 };
