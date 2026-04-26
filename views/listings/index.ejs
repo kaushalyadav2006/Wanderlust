@@ -1,11 +1,16 @@
 <% layout("/layouts/boilerplate")%>
-    <!-- <h2>All Listings</h2> -->
-    <!-- <form action="/listings/new" method="get">
-        <button>Create New Listings</button>
-    </form> -->
 
+<div class="row align-items-center">
+  <!-- FILTERS (LEFT SIDE) -->
+<div class="col-lg-8 col-md-8 col-sm-12">
+    <div class="filters-scroll-wrap">
+      <!-- LEFT BUTTON -->
+      <button type="button" class="scroll-btn" id="scrollLeft">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
 
-    <div id="filters">
+      <!-- FILTERS -->
+      <div id="filters" class="horizontal-filters">
         <div class="filter">
             <div><i class="fa-solid fa-fire"></i></div>
             <p>Treding</p>
@@ -62,7 +67,19 @@
             <p>Boats</p>
         </div>
 
-        <div class="tax-toggle">
+
+      </div>
+      <!-- RIGHT BUTTON -->
+      <button type="button" class="scroll-btn" id="scrollRight">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+    </div>
+  </div>
+
+  <!-- TAX TOGGLE (RIGHT SIDE) -->
+<div class="col-lg-4 col-md-4 d-none d-md-flex justify-content-end">
+            <div class="tax-toggle">
             <div class="form-check-reverse form-switch">
                 <input 
                 class="form-check-input" 
@@ -70,14 +87,15 @@
                 role="switch" 
                 id="flexSwitchCheckDefault"
                 >
-
-                <label class="form-check-label" 
-                    for="flexSwitchCheckDefault">
-                    Display total after taxes 
-                </label>
+                <label class="form-check-label" for="flexSwitchCheckDefault">
+                Display total after taxes 
+            </label>
             </div>
         </div>
     </div>
+
+</div>
+<!-- LISTINGS -->
     <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
         <% for(let listing of allListings) { %>
             <a href="/listings/<%= listing._id%>" class="listing-link">
@@ -100,6 +118,4 @@
         <% } %>
     </div>
 
-
-    
-    
+<script src="/js/filter.js"></script>

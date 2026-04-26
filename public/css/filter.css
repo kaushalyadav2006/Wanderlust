@@ -1,34 +1,138 @@
+/* ===== FILTER WRAPPER ===== */
+.filters-scroll-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0; /* 🔥 prevents overflow bugs */
+}
+
+/* ===== FILTERS CONTAINER ===== */
+#filters {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  overflow-x: auto;
+  scroll-behavior: smooth;
+
+  flex: 1;
+  min-width: 0; /* 🔥 MOST IMPORTANT FIX */
+
+  white-space: nowrap;
+  padding: 0.3rem 0.1rem 0.5rem;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#filters::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== FILTER ITEM ===== */
+.filter {
+  flex: 0 0 auto;
+  text-align: center;
+  opacity: 0.7;
+  transition: 0.2s ease;
+  padding: 0.25rem 0.5rem;
+}
+
+.filter:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+  cursor: pointer;
+}
+
+.filter i {
+  font-size: 1.2rem;
+}
+
+.filter p {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* ===== SCROLL BUTTON ===== */
+.scroll-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: #fff;
+
+  display: grid;
+  place-items: center;
+
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.scroll-btn:hover {
+  background: #f8f9fa;
+}
+
+.scroll-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ===== TAX TOGGLE ===== */
+#tax-filters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex: 0 0 auto; /* don't shrink */
+}
+
+.tax-toggle {
+  border: 1px solid black;
+  border-radius: 1rem;
+
+  height: 2.5rem;
+  padding: 0 1rem;
+
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap;
+}
+
+/* ===== TAX INFO (hidden by default) ===== */
+.tax-info {
+  display: none;
+}
+
+/* ===== MEDIUM SCREENS ===== */
+/* @media (min-width: 768px) and (max-width: 991.98px) {
+  .filter i {
+    font-size: 1.25rem;
+  }
+
+  .filter p {
+    font-size: 0.95rem;
+  }
+} */
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  #tax-filters {
+    margin-left: 1rem; /* add breathing space */
+  }
+
+  .filters-scroll-wrap {
+    gap: 0.4rem; /* slightly tighter */
+  }
+
+  #filters {
+    gap: 1rem; /* reduce spacing between items */
+  }
+}
 
 
-/* filters */
-    #filters{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    }
-    .filter{
-        text-align: center;
-        margin-right: 2rem;
-        margin-top: 2rem;
-        opacity: 0.7;
-    }
-    .filter:hover{
-        opacity: 1;
-        cursor: pointer;
-    }
-    .filter p{
-        font-size: 0.8rem;
-    }
-    .tax-info {
-        display: none;
-    }
-
-    .tax-toggle{
-        border: 1px solid black;
-        border-radius: 1rem;
-        height: 2.5rem;
-        padding: 1rem;
-        margin-left: 2rem; /**/
-        display: flex;
-        align-items: center;
-    }
+@media (max-width: 991.98px) {
+  .tax-toggle {
+    font-size: 0.85rem;
+    padding: 0 0.8rem;
+  }
+}

@@ -4,10 +4,10 @@ const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
-module.exports.index = async (req, res) => {
-  const allListings = await Listing.find({});
-  res.render("listings/index", { allListings });
-};
+// module.exports.index = async (req, res) => {
+//   const allListings = await Listing.find({});
+//   res.render("listings/index", { allListings });
+// };
 
 module.exports.renderNewForm = (req, res) => {
   res.render("listings/new");
@@ -40,12 +40,12 @@ module.exports.showListing = async (req, res) => {
 module.exports.createNewListing = async (req, res, next) => {
   let response = await geocodingClient
     .forwardGeocode({
-      query: req.body.listing.location, // ****** 
+      query: req.body.listing.location, // ******
       limit: 1, //Optiona (limits 5)
     })
     .send();
   // console.log(response.body.features[0].geometry);
- 
+
   let url = req.file.path;
   let filename = req.file.filename;
   console.log(url, "..", filename);
@@ -96,4 +96,27 @@ module.exports.destoryListing = async (req, res) => {
   console.log(deleteLsiting);
   req.flash("success", "Listing deleted!");
   res.redirect("/listings");
+};
+
+
+module.exports.index = async (req, res) => {
+  const q = (req.query.q || "").trim();
+
+  let filter = {};
+  if (q) {
+    const regex = new RegExp(q, "i");
+    filter = {
+      $or: [{ title: regex }, { location: regex }, { country: regex }],
+    };
+  }
+  const allListings = await Listing.find(filter);
+
+  if (q && allListings.length === 0) {
+    req.flash(
+      "error",
+      "No listings found for this location. Try a different search.",
+    );
+    return res.redirect("/listings");
+  }
+  res.render("listings/index.ejs", { allListings, q });
 };
