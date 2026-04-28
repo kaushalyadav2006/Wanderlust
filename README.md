@@ -1,97 +1,117 @@
 
-# WanderLust 🧳🌍
+# WanderLust
 
-[![Node.js](https://img.shields.io/badge/Node.js-18.x-green)](https://nodejs.org/)
-[![Express](https://img.shields.io/badge/Express.js-4.x-blue)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-brightgreen)](https://mongoosejs.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-WanderLust is a full-stack travel listing web app where users can create, browse, review, and manage travel destinations. Built with Node.js, Express, MongoDB, and EJS templates. Includes user authentication, image uploads, and interactive maps.
-
+WanderLust is a full‑stack travel listing web app where users can create, browse, review, and manage travel destinations. It’s built with Node.js, Express, MongoDB (Mongoose), and EJS templates, with image uploads (Cloudinary) and map support (Mapbox).
 
 ## 🚀 Tech Stack
 
-- **Node.js**
+- **Node.js** (project configured for Node **22.22.2**)
 - **Express.js**
-- **MongoDB** & **Mongoose**
-- **EJS** & **EJS-Mate**
+- **MongoDB** + **Mongoose**
+- **EJS** + **EJS-Mate**
+- **Passport (Local)** (authentication)
 - **Joi** (validation)
-- **Cloudinary** (image hosting)
-- **Mapbox GL JS** (interactive maps)
+- **Cloudinary** + **Multer** (image upload + hosting)
+- **Mapbox** (maps / geocoding token)
 - **Bootstrap 5** (UI)
-
 
 ## ✨ Features
 
-- User authentication (register/login/logout)
-- Create, read, update, and delete travel listings
-- Upload images for listings (Cloudinary)
-- Interactive maps for each listing (Mapbox)
-- Add and delete reviews for listings
-- Server-side validation with Joi
-- Flash messages for feedback
-- Robust error handling with custom middleware
+- **Auth**: signup, login, logout (Passport local)
+- **Listings**: create, browse, edit, delete travel listings
+- **Uploads**: listing image upload to Cloudinary
+- **Reviews**: add/delete reviews for listings
+- **Validation**: server-side validation with Joi
+- **UX**: flash messages for success/error feedback
+- **Errors**: centralized error handling + 404 page
 
-
-## 📁 Project Structure
+## 📁 Project Structure (high level)
 
 - `app.js` — main server entry
-- `routes/` — listing, review, and user routes
+- `routes/` — `listing.js`, `review.js`, `user.js`
+- `controllers/` — route handlers (listings/users/reviews)
 - `models/` — Mongoose models
-- `views/` — EJS templates
-- `public/` — static CSS/JS assets
+- `views/` — EJS templates (`views/listings/*`, `views/users/*`, layouts/includes)
+- `public/` — static assets (CSS/JS/images)
+- `middleware.js` — auth/ownership + validators
 - `schema.js` — Joi schemas
-- `cloudConfig.js` — Cloudinary config
-- `middleware.js` — custom middleware
-
+- `cloudConfig.js` — Cloudinary + Multer storage setup
+- `utils/` — helpers like `ExpressError`, `wrapAsync`
 
 ## 🛠️ Local Development
 
-1. **Clone the repo:**
-   ```bash
-   git clone https://github.com/yourusername/wanderlust.git
-   cd wanderlust
-   ```
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-3. **Set up environment variables:**
-   - Copy `.env.example` to `.env` and fill in your MongoDB, Cloudinary, and Mapbox credentials.
-4. **Start MongoDB** (if not running):
-   - `mongod` (or use MongoDB Atlas)
-5. **Run the app:**
-   ```bash
-   node app.js
-   ```
-6. **Open in browser:**
-   - [http://localhost:8080](http://localhost:8080)
+### Prerequisites
 
+- **Node.js** (22.22.2 recommended)
+- **MongoDB Atlas** connection string (or any MongoDB URI)
+- A **Cloudinary** account (for uploads)
+- A **Mapbox** token (for map features)
+
+### Setup
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create a `.env` file in the project root and add:
+
+```bash
+ATLASDB_URL="your_mongodb_connection_string"
+SECRET="a_long_random_session_secret"
+
+# Cloudinary
+CLOUD_NAME="your_cloudinary_cloud_name"
+CLOUD_API_KEY="your_cloudinary_api_key"
+CLOUD_API_SECRET="your_cloudinary_api_secret"
+
+# Mapbox (used by views via res.locals.mapToken)
+MAP_TOKEN="your_mapbox_token"
+```
+
+3. Run the server:
+
+```bash
+node app.js
+```
+
+4. Open:
+- `http://localhost:8080`
 
 ## 🌐 Main Routes
 
-- `GET /` — root route
-- `GET /listings` — all listings
-- `GET /listings/new` — create listing form
-- `POST /listings` — create listing
-- `GET /listings/:id` — listing details
-- `GET /listings/:id/edit` — edit listing form
-- `PUT /listings/:id` — update listing
-- `DELETE /listings/:id` — delete listing
-- `POST /listings/:id/reviews` — add review
-- `DELETE /listings/:id/reviews/:reviewId` — delete review
+### Auth
 
+- `GET /signup` — signup form
+- `POST /signup` — create account
+- `GET /login` — login form
+- `POST /login` — login
+- `GET /logout` — logout
+
+### Listings
+
+- `GET /listings` — all listings
+- `GET /listings/new` — new listing form (auth required)
+- `POST /listings` — create listing (auth required, image upload)
+- `GET /listings/:id` — listing details
+- `GET /listings/:id/edit` — edit listing form (owner only)
+- `PUT /listings/:id` — update listing (owner only, optional image upload)
+- `DELETE /listings/:id` — delete listing (owner only)
+
+### Reviews
+
+- `POST /listings/:id/reviews` — add review (auth required)
+- `DELETE /listings/:id/reviews/:reviewId` — delete review (author only)
 
 ## 📸 Screenshots
 
-_Add screenshots of your app here!_
+Add screenshots/gifs here (homepage, listing page, map, create listing, auth flow).
 
 ## 📝 License
 
-MIT
-
----
+ISC
 
 ## 👤 Author
 
-**Kaushal Yadav**
+Kaushal Yadav
