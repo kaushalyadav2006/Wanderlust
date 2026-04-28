@@ -75,10 +75,3 @@ document.addEventListener("keydown", (e) => {
     });
   }
 });
-
-document.querySelectorAll(".filter").forEach((filter) => {
-  filter.addEventListener("click", function () {
-    const category = this.querySelector("p").textContent.trim();
-    window.location.href = `/listings?category=${encodeURIComponent(category)}`;
-  });
-});
