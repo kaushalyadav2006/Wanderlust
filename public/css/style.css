@@ -30,8 +30,7 @@ body {
 }
 
 .f-info-socials i {
-  margin-right: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 .f-info {
   text-align: center;
@@ -40,8 +39,20 @@ body {
   background-color: #ebebeb;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: space-evenly;
+  align-content: space-evenly;
 }
+
+.f-info-socials a {
+  color: inherit;    
+  text-decoration: none;
+  margin-right: 12px;
+  font-size: 1.5rem;
+}
+
+.f-info-socials a:hover {
+  opacity: 0.7;
+}
+
 
 /* card */
 .listing-card {
@@ -100,6 +111,14 @@ body {
 }
 .btns {
   display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btns .btn {
+  min-width: 90px;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.9rem;
 }
 .show-card {
   padding-left: 0 !important;
