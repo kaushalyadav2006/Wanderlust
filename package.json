@@ -3,7 +3,7 @@
   "engines": {
     "node":"22.22.2"
   },
-  "name": "17majorproject",
+  "name": "staypoint",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

@@ -1,6 +1,6 @@
-# RoamRes
+# StayPoint
 
-RoamRes is a full‑stack travel listing web app where users can create, browse, review, and manage travel destinations. Built with Node.js, Express, MongoDB (Mongoose), and EJS templates, with image uploads (Cloudinary) and map support (Mapbox).
+StayPoint is a full‑stack travel listing web app where users can create, browse, review, and manage travel destinations. Built with Node.js, Express, MongoDB (Mongoose), and EJS templates, with image uploads (Cloudinary) and map support (Mapbox).
 
 **Live demo (Render)**: `https://wanderlust-vbmv.onrender.com/listings`
 

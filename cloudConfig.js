@@ -11,7 +11,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "roamres_DEV",
+    folder: "staypoint_DEV",
     allowedFormats: ["png", "jpeg", "jpg"],
   },
 });
